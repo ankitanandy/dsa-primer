@@ -1,33 +1,5 @@
 # Array
-
-## Tips
-- Understand the problem requirements and constraints.
-- Consider edge cases such as empty arrays, single-element arrays, and arrays with duplicate elements.
-- Use two-pointer technique for problems involving pairs or subarrays.
-- Utilize sorting for problems where order matters.
-- Take advantage of hash maps for quick lookups.
-
-## Notes
-- Arrays are a collection of elements identified by index or key.
-- They provide fast access to elements but can be costly for insertion and deletion operations.
-- Arrays can be single-dimensional or multi-dimensional.
-
-## Frequently Asked Questions
-1. **How do you find the maximum product of two integers in an array?**
-   - Sort the array and multiply the two largest numbers.
-   - Alternatively, iterate through the array to find the two largest numbers.
-
-2. **How do you find the missing number in an array of integers from 1 to n?**
-   - Use the formula for the sum of the first n natural numbers and subtract the sum of the array elements from it.
-
-3. **How do you remove duplicates from a sorted array?**
-   - Use two pointers to overwrite duplicates in place.
-
-## Common Tricks to Identify Patterns
-- **Sliding Window:** Useful for problems involving subarrays or substrings.
-- **Two Pointers:** Effective for problems involving pairs or when you need to traverse the array from both ends.
-- **Hash Map:** Great for problems requiring quick lookups or counting elements.
-- **Sorting:** Helps in problems where order or comparison is needed.
+An array is a fixed-size collection of elements stored in contiguous memory locations. It allows random access in O(1) time but has limitations like fixed size (in static arrays) and expensive insertions/deletions.
 
 ## Key Operations & Their Complexities
 | Operation                  | Time Complexity (Best/Average/Worst) | Notes                                      |
@@ -334,3 +306,32 @@ int FirstMissingPositive(int[] nums) {
 | XOR Trick                | Finding missing/duplicate numbers             | O(N)             |
 | Merge Intervals          | Overlapping intervals                         | O(N log N)       |
 | Cyclic Sort              | Missing numbers in 1 to N                     | O(N)             |
+
+## Tips
+- Understand the problem requirements and constraints.
+- Consider edge cases such as empty arrays, single-element arrays, and arrays with duplicate elements.
+- Use two-pointer technique for problems involving pairs or subarrays.
+- Utilize sorting for problems where order matters.
+- Take advantage of hash maps for quick lookups.
+
+## Notes
+- Arrays are a collection of elements identified by index or key.
+- They provide fast access to elements but can be costly for insertion and deletion operations.
+- Arrays can be single-dimensional or multi-dimensional.
+
+## Frequently Asked Questions
+1. **How do you find the maximum product of two integers in an array?**
+   - Sort the array and multiply the two largest numbers.
+   - Alternatively, iterate through the array to find the two largest numbers.
+
+2. **How do you find the missing number in an array of integers from 1 to n?**
+   - Use the formula for the sum of the first n natural numbers and subtract the sum of the array elements from it.
+
+3. **How do you remove duplicates from a sorted array?**
+   - Use two pointers to overwrite duplicates in place.
+
+## Common Tricks to Identify Patterns
+- **Sliding Window:** Useful for problems involving subarrays or substrings.
+- **Two Pointers:** Effective for problems involving pairs or when you need to traverse the array from both ends.
+- **Hash Map:** Great for problems requiring quick lookups or counting elements.
+- **Sorting:** Helps in problems where order or comparison is needed.
