@@ -38,12 +38,24 @@ A linked list is a linear data structure where each element is a separate object
 - **Detecting a cycle in a linked list**: Use Floyd’s Cycle-Finding Algorithm (Tortoise and Hare).
 - **Finding the middle of a linked list**: Use two pointers, one moving twice as fast as the other.
 
+## Common Use Cases for Linked Lists
+1. **Dynamic Memory Allocation**: Lists that grow or shrink dynamically.
+2. **Implementing Stacks and Queues**.
+3. **Handling Large Data Streams**.
+4. **Chaining in Hash Tables**.
+
+## Identifying Linked List Problems in Interviews
+Look for these clues:
+- **Sequential Node Connections**: If the problem discusses elements connected via pointers or next references.
+- **Insert/Delete at Arbitrary Positions**: Linked lists are ideal for dynamic insertion/deletion.
+- **Reversing a List**: Common linked list reversal questions.
+- **Loop/Cycle Detection**: If the problem involves identifying cycles in a sequence.
+
 ## Example Problems and Solutions
 
 ### Problem 1: Reverse a Singly Linked List
 **Solution in C#:**
 ```csharp
-
 public class ListNode {
     public int val;
     public ListNode next;
@@ -64,11 +76,10 @@ public class Solution {
     }
 }
 ```
-### Problem 2. Detect a cycle in Linked List
 
+### Problem 2. Detect a cycle in Linked List
 **Solution in C#:**
 ```csharp
-
 public class ListNode {
     public int val;
     public ListNode next;
@@ -91,10 +102,8 @@ public class Solution {
 ```
 
 ### Problem 3. Find the Middle of a Linked List
-
 **Solution in C#:**
 ```csharp
-
 public class ListNode {
     public int val;
     public ListNode next;
@@ -113,4 +122,58 @@ public class Solution {
     }
 }
 ```
+
+### Problem 4. Merge Two Sorted Linked Lists
+**Solution in C#:**
+```csharp
+public ListNode MergeTwoLists(ListNode l1, ListNode l2) {
+    if (l1 == null) return l2;
+    if (l2 == null) return l1;
+
+    if (l1.val < l2.val) {
+        l1.next = MergeTwoLists(l1.next, l2);
+        return l1;
+    } else {
+        l2.next = MergeTwoLists(l1, l2.next);
+        return l2;
+    }
+}
+```
+
+### Problem 5. Remove N-th Node from End of List
+**Solution in C#:**
+```csharp
+public ListNode RemoveNthFromEnd(ListNode head, int n) {
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode first = dummy;
+    ListNode second = dummy;
+
+    for (int i = 0; i <= n; i++) {
+        first = first.next;
+    }
+
+    while (first != null) {
+        first = first.next;
+        second = second.next;
+    }
+
+    second.next = second.next.next;
+    return dummy.next;
+}
+```
+
+## Tips for Solving Linked List Problems
+1. **Two Pointers**: Commonly used for problems involving cycles, middle node detection, and N-th node removal.
+2. **Dummy Nodes**: Use a dummy node to simplify head insertion/deletion.
+3. **Recursive Solutions**: Many linked list problems can be solved recursively.
+4. **Edge Cases**: Consider empty lists, single-node lists, and lists with loops.
+5. **Cycle Detection**: Use slow and fast pointers to detect loops efficiently.
+
+## Practice Problems
+1. **Flatten a Multilevel Doubly Linked List**.
+2. **Partition List Around a Value**.
+3. **Reorder List (Alternate Front and Back Nodes)**.
+4. **Intersection of Two Linked Lists**.
+5. **Copy List with Random Pointer**.
 
