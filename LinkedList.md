@@ -95,8 +95,6 @@ public class Solution {
 **Solution in C#:**
 ```csharp
 
-// filepath: /Users/ankitanandy/Projects/dsa-primer/dsa-primer/LinkedList.md
-
 public class ListNode {
     public int val;
     public ListNode next;
