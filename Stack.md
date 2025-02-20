@@ -33,6 +33,21 @@ A stack is a linear data structure that follows the Last In First Out (LIFO) pri
 - **Reverse Elements**: Use a stack to reverse the order of elements.
 - **Backtracking**: Use a stack to keep track of choices and backtrack when necessary.
 
+## Common Use Cases for Stacks
+1. **Expression Evaluation and Conversion** (e.g., infix to postfix).
+2. **Balanced Parentheses** (e.g., checking valid brackets).
+3. **Undo/Redo Operations** in text editors.
+4. **Backtracking** (e.g., Depth-First Search).
+5. **Monotonic Stack** for nearest greater/smaller element problems.
+6. **Function Call Management** (e.g., recursion).
+
+## Identifying Stack Problems
+Look for these clues:
+- **LIFO Order**: If the problem processes elements in reverse order of arrival.
+- **Nested Structures**: Matching brackets or parenthesis often use stacks.
+- **Previous/Next Greater or Smaller Element**: Monotonic stacks are useful here.
+- **Undo/Redo Functionality**: Implies a stack usage.
+
 ## Example Problems and Solutions
 
 ### 1. Implement Stack using Arrays
@@ -89,7 +104,9 @@ public bool IsValid(string s) {
         } else {
             if (stack.Count == 0) return false;
             char top = stack.Pop();
-            if ((c == ')' && top != '(') || (c == '}' && top != '{') || (c == ']' && top != '[')) {
+            if ((c == ')' && top != '(') ||
+                (c == '}' && top != '{') ||
+                (c == ']' && top != '[')) {
                 return false;
             }
         }
@@ -186,5 +203,59 @@ public int[] DailyTemperatures(int[] T) {
     return result;
 }
 ```
+
+### 6. Next Greater Element
+**Problem:** For each element in an array, find the next greater element to its right.
+
+**Solution**: Use a monotonic stack to maintain a decreasing sequence.
+```csharp
+public int[] NextGreaterElement(int[] nums) {
+    int n = nums.Length;
+    int[] result = new int[n];
+    Stack<int> stack = new Stack<int>();
+
+    for (int i = n - 1; i >= 0; i--) {
+        while (stack.Count > 0 && stack.Peek() <= nums[i]) {
+            stack.Pop();
+        }
+        result[i] = stack.Count == 0 ? -1 : stack.Peek();
+        stack.Push(nums[i]);
+    }
+
+    return result;
+}
+```
+
+### 7. Largest Rectangle in Histogram
+**Problem:** Given an array representing histogram bar heights, find the largest rectangle.
+
+**Solution**: Use a stack to maintain bar indices.
+```csharp
+public int LargestRectangleArea(int[] heights) {
+    Stack<int> stack = new Stack<int>();
+    int maxArea = 0;
+    int n = heights.Length;
+
+    for (int i = 0; i <= n; i++) {
+        int height = (i == n) ? 0 : heights[i];
+        while (stack.Count > 0 && height < heights[stack.Peek()]) {
+            int h = heights[stack.Pop()];
+            int width = stack.Count == 0 ? i : i - stack.Peek() - 1;
+            maxArea = Math.Max(maxArea, h * width);
+        }
+        stack.Push(i);
+    }
+
+    return maxArea;
+}
+```
+
+## Tips for Solving Stack Problems
+1. **Understand LIFO Behavior**: Visualize how elements are pushed and popped.
+2. **Handle Edge Cases**: For parentheses problems, handle empty stacks and leftover symbols.
+3. **Use Monotonic Stacks**: Efficient for nearest greater/smaller element problems.
+4. **Simulate Step-by-Step**: For expression problems, simulate operations step-by-step to ensure correctness.
+
+
 
 

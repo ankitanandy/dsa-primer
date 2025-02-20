@@ -32,6 +32,26 @@ A queue is a linear data structure that follows the First In First Out (FIFO) pr
 - **Task Scheduling**: Use a queue to manage tasks in the order they arrive.
 - **Buffering**: Use a queue to store data temporarily while it is being processed.
 
+## Common Use Cases for Queues
+1. **Task Scheduling** (e.g., CPU scheduling, printer queues).
+2. **Breadth-First Search (BFS)** in graphs.
+3. **Cache Systems** (e.g., FIFO cache replacement policies).
+4. **Asynchronous Data Processing**.
+5. **Order Processing** in message queues.
+
+## Identifying Queue Problems in Interviews
+Look for these patterns or clues:
+- **First-Come, First-Served** scenarios.
+- **Sequential Processing**: Elements processed in the order they arrive.
+- **Level-by-Level Traversals**: BFS traversal of trees or graphs.
+- **Sliding Window Problems**: Often involve queues for maintaining the current window.
+
+## Types of Queues
+1. **Simple Queue**: Standard FIFO queue.
+2. **Deque (Double-Ended Queue)**: Elements can be added/removed from both ends.
+3. **Circular Queue**: A queue that wraps around when the end is reached.
+4. **Priority Queue**: Elements are dequeued based on priority instead of order.
+
 ## Example Problems and Solutions
 
 ### 1. Implement Queue using Arrays
@@ -246,3 +266,70 @@ public class MyStack {
         return queue1.Count == 0;
     }
 }
+```
+
+### 6. Sliding Window Maximum
+**Problem:** Given an array and a window size `k`, find the maximum for each window.
+
+**Solution**: Use a deque to store indices and maintain the window.
+```csharp
+public int[] MaxSlidingWindow(int[] nums, int k) {
+    if (nums == null || nums.Length == 0) return new int[0];
+    LinkedList<int> deque = new LinkedList<int>();
+    int[] result = new int[nums.Length - k + 1];
+
+    for (int i = 0; i < nums.Length; i++) {
+        // Remove elements outside the window
+        if (deque.Count > 0 && deque.First.Value < i - k + 1) {
+            deque.RemoveFirst();
+        }
+
+        // Remove smaller elements from the back
+        while (deque.Count > 0 && nums[deque.Last.Value] < nums[i]) {
+            deque.RemoveLast();
+        }
+
+        deque.AddLast(i);
+
+        // Add the maximum element for the window
+        if (i >= k - 1) {
+            result[i - k + 1] = nums[deque.First.Value];
+        }
+    }
+
+    return result;
+}
+```
+
+### 7. BFS Traversal of a Graph
+**Problem:** Traverse a graph using Breadth-First Search.
+
+**Solution**: Use a queue to explore nodes level-by-level.
+```csharp
+public void BFS(int startNode, Dictionary<int, List<int>> graph) {
+    Queue<int> queue = new Queue<int>();
+    HashSet<int> visited = new HashSet<int>();
+
+    queue.Enqueue(startNode);
+    visited.Add(startNode);
+
+    while (queue.Count > 0) {
+        int node = queue.Dequeue();
+        Console.WriteLine(node);
+
+        foreach (int neighbor in graph[node]) {
+            if (!visited.Contains(neighbor)) {
+                queue.Enqueue(neighbor);
+                visited.Add(neighbor);
+            }
+        }
+    }
+}
+```
+
+## Tips for Solving Queue Problems
+1. **Think FIFO**: If the problem involves processing in the order of arrival, a queue is likely involved.
+2. **Sliding Window/Fixed-Length Processing**: Consider using deques for optimization.
+3. **Tree or Graph Level Traversals**: BFS typically uses queues to explore level-by-level.
+4. **Circular Behavior**: Use circular queues to handle wrapping-around scenarios.
+5. **Cache Management**: Many cache algorithms (e.g., FIFO cache) are queue-based.
