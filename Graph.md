@@ -196,6 +196,96 @@ The function `Dijkstra` implements Dijkstra's algorithm to find the shortest pat
    - This function finds the vertex with the minimum distance from the source that has not been visited. It iterates through the `dist` array and returns the index of the vertex with the smallest distance.
 
 By the end of the algorithm, the `dist` array contains the shortest distances from the source vertex to all other vertices in the graph. Dijkstra's algorithm is efficient for graphs with non-negative weights and is widely used in network routing and geographical mapping applications.
+### C. Dijkstra’s Algorithm (Using Priority Queue)
+```csharp
+void DijkstraWithPriorityQueue(int[,] graph, int src, int n) {
+    int[] dist = new int[n];
+    for (int i = 0; i < n; i++) dist[i] = int.MaxValue;
+    dist[src] = 0;
+
+    var pq = new PriorityQueue<int, int>();
+    pq.Enqueue(src, 0);
+
+    while (pq.Count > 0) {
+        pq.TryDequeue(out int u , out int currDist)
+
+        if (currdist > dist[u]) continue;
+
+        for (int v = 0;v<n;v++) {
+            
+            if (graph[u,v]!=0 && dist[u] + graph[u,v] < dist[v]) {
+                dist[v] = dist[u] + graph[u,v];
+                pq.Enqueue(v, dist[v]);
+            }
+        }
+    }
+
+    // Output the shortest distances
+    for (int i = 0; i < n; i++) {
+        Console.WriteLine($"Distance from {src} to {i} is {dist[i]}");
+    }
+}
+```
+
+---
+
+### **1. Comparison with Previous Approach
+- **Efficiency**: The priority queue approach is more efficient than the previous approach using a simple array for finding the minimum distance vertex. The priority queue allows for faster extraction of the minimum element and updating of distances, leading to an overall time complexity of \(O((V + E) \log V)\), where \(V\) is the number of vertices and \(E\) is the number of edges.
+- **Implementation**: The priority queue approach uses a `PriorityQueue` to maintain the vertices to be processed, sorted by their current known shortest distance. This reduces the need for a separate `MinDistance` function and simplifies the main loop.
+- **Scalability**: The priority queue approach scales better for larger graphs with many edges, as it handles the frequent updates and extractions more efficiently than the simple array-based approach.
+
+
+
+### **2. Why No `visited` Array is Needed**
+- **Duplicate Entries in the Priority Queue**:
+  - A vertex can be added to the priority queue multiple times if its distance is updated (e.g., if a shorter path is found).
+  - However, when a vertex is dequeued, only the entry with the smallest distance is processed. All other entries for the same vertex are ignored because their distances are larger than the current known shortest distance.
+
+- **Implicit Handling of Visited Vertices**:
+  - When a vertex is dequeued, its distance is finalized (i.e., it will not change again). This is because Dijkstra's algorithm guarantees that the shortest distance to a vertex is found the first time it is dequeued (assuming non-negative edge weights).
+  - Any subsequent entries for the same vertex in the priority queue will have larger distances and will be skipped.
+
+---
+
+### **3. Example**
+Consider the following graph:
+
+```
+    1
+A ---- B
+|     / |
+4|   /1 |2
+| /    |
+C ---- D
+    3
+```
+
+- Suppose the source vertex is `A`.
+- The priority queue will initially contain `(A, 0)`.
+- When `A` is dequeued, its neighbors `B` and `C` are added to the queue with distances `1` and `4`, respectively.
+- Next, `B` is dequeued (distance `1`), and its neighbor `D` is added to the queue with distance `3` (`1 + 2`).
+- Then, `D` is dequeued (distance `3`), and its neighbor `C` is added to the queue with distance `6` (`3 + 3`).
+- Finally, `C` is dequeued (distance `4`). The entry `(C, 6)` in the queue is ignored because `4` is smaller than `6`.
+
+At no point do we need a `visited` array because the priority queue ensures that each vertex is processed only once with its shortest distance.
+
+---
+
+### **4. Comparison with the Linear Search Implementation**
+In the **linear search implementation** of Dijkstra's algorithm (without a priority queue), a `visited` array is necessary because:
+- The algorithm explicitly iterates over all vertices to find the one with the smallest distance.
+- Without a `visited` array, the algorithm might reprocess vertices that have already been finalized, leading to incorrect results.
+
+---
+
+### **5. When a `visited` Array Might Still Be Useful**
+In some cases, a `visited` array can still be used to:
+- Optimize memory usage by avoiding duplicate entries in the priority queue.
+- Track which vertices have been processed for debugging or additional logic.
+
+However, it is **not strictly necessary** for the correctness of the algorithm when using a priority queue.
+
+---
 
 ### B. Floyd-Warshall Algorithm
 ```csharp
