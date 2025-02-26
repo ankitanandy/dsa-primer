@@ -229,7 +229,7 @@ void DijkstraWithPriorityQueue(int[,] graph, int src, int n) {
 
 ---
 
-### **1. Comparison with Previous Approach
+### **1. Comparison with Previous Approach**
 - **Efficiency**: The priority queue approach is more efficient than the previous approach using a simple array for finding the minimum distance vertex. The priority queue allows for faster extraction of the minimum element and updating of distances, leading to an overall time complexity of \(O((V + E) \log V)\), where \(V\) is the number of vertices and \(E\) is the number of edges.
 - **Implementation**: The priority queue approach uses a `PriorityQueue` to maintain the vertices to be processed, sorted by their current known shortest distance. This reduces the need for a separate `MinDistance` function and simplifies the main loop.
 - **Scalability**: The priority queue approach scales better for larger graphs with many edges, as it handles the frequent updates and extractions more efficiently than the simple array-based approach.
@@ -245,7 +245,6 @@ void DijkstraWithPriorityQueue(int[,] graph, int src, int n) {
   - When a vertex is dequeued, its distance is finalized (i.e., it will not change again). This is because Dijkstra's algorithm guarantees that the shortest distance to a vertex is found the first time it is dequeued (assuming non-negative edge weights).
   - Any subsequent entries for the same vertex in the priority queue will have larger distances and will be skipped.
 
----
 
 ### **3. Example**
 Consider the following graph:
@@ -269,14 +268,13 @@ C ---- D
 
 At no point do we need a `visited` array because the priority queue ensures that each vertex is processed only once with its shortest distance.
 
----
+
 
 ### **4. Comparison with the Linear Search Implementation**
 In the **linear search implementation** of Dijkstra's algorithm (without a priority queue), a `visited` array is necessary because:
 - The algorithm explicitly iterates over all vertices to find the one with the smallest distance.
 - Without a `visited` array, the algorithm might reprocess vertices that have already been finalized, leading to incorrect results.
 
----
 
 ### **5. When a `visited` Array Might Still Be Useful**
 In some cases, a `visited` array can still be used to:
@@ -285,7 +283,6 @@ In some cases, a `visited` array can still be used to:
 
 However, it is **not strictly necessary** for the correctness of the algorithm when using a priority queue.
 
----
 
 ### B. Floyd-Warshall Algorithm
 ```csharp
